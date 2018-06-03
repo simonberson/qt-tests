@@ -68,18 +68,18 @@ bool TableGroupModel::filterAcceptsRow(int iSourceRow, const QModelIndex &oSourc
 
 }
 
-QVariant TableGroupModel::data(const QModelIndex &index, int role) const
+QVariant TableGroupModel::data(const QModelIndex &oIndex, int role) const
 {
-    if (!index.isValid())
+    if (!oIndex.isValid())
         return QVariant();
 
     switch (role) {
     case Qt::DisplayRole:
-        return GetData(index.row(), index.column());
+        return GetData(oIndex.row(), oIndex.column());
     default:
         break;
     }
 
-    return sourceModel()->data(index,role);
+    return sourceModel()->data(oIndex,role);
 }
 
