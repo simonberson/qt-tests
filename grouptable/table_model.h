@@ -4,29 +4,7 @@
 
 #include <QAbstractTableModel>
 #include <QVector>
-
-#define DEF_TABLE_COLUMN_COUNT  2
-
-typedef struct _TableItem_
-{
-    _TableItem_()
-    {
-
-    }
-
-    _TableItem_(const QString& _oName, int _iValue)
-    {
-        this->iValue = _iValue;
-        this->oName = _oName;
-    }
-
-    int iValue;
-    QString oName;
-
-}STABLE_ITEM;
-
-typedef  QVector<STABLE_ITEM> TableData;
-
+#include "table_def.h"
 
 class TableModel : public QAbstractTableModel
 {

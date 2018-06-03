@@ -26,8 +26,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    table_model.cpp
+    table_model.cpp \
+    table_group_model.cpp
 
 HEADERS += \
         mainwindow.h \
-    table_model.h
+    table_model.h \
+    table_group_model.h \
+    table_def.h
