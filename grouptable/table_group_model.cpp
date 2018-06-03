@@ -6,6 +6,11 @@ TableGroupModel::TableGroupModel(QObject *parent)
 
 }
 
+void TableGroupModel::Clear()
+{
+    m_oData.clear();
+}
+
 QVariant TableGroupModel::GetData(int iRow) const
 {
     return m_oData.at(iRow).iValue;

@@ -28,6 +28,8 @@ public:
     TableGroupModel(QObject *parent = NULL) ;
     ~TableGroupModel() {}
 
+    void Clear();
+
 };
 
 #endif // TABLE_GROUP_MODEL_H

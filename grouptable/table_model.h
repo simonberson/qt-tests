@@ -26,7 +26,11 @@ public:
     TableModel(QObject *poParent = Q_NULLPTR);
 
     // Table data
-    void UpdateData(const TableData& oTableData);
+    void DropTable(const TableData& oTableData);
+
+    void AddItem(const STABLE_ITEM & sTableItem);
+
+    void Clear();
 
     // Abstact item model functions.
     int rowCount(const QModelIndex& parent = QModelIndex()) const;

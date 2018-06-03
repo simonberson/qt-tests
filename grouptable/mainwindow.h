@@ -4,14 +4,20 @@
 #include <QMainWindow>
 
 class TableModel;
+class TableGroupModel;
+class QSortFilterProxyModel;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 private:
     QScopedPointer<TableModel> m_poTableModel;
-
+    QScopedPointer<TableGroupModel> m_poTableGroupModel;
+    QScopedPointer<QSortFilterProxyModel> m_poSortModel;
     void FillTable();
+
+    QWidget * InitInputWidget();
+    QWidget * InitTableWidget();
 
 public:
     explicit MainWindow(QWidget *parent = 0);

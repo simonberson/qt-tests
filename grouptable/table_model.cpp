@@ -9,11 +9,27 @@ TableModel::TableModel(QObject *poParent)
 
 }
 
-void TableModel::UpdateData(const TableData &oTableData)
+void TableModel::DropTable(const TableData &oTableData)
 {
     beginResetModel();
     m_oTableData =
             oTableData;
+    endResetModel();
+}
+
+void TableModel::AddItem(const STABLE_ITEM &sTableItem)
+{
+    beginInsertRows(QModelIndex(), m_oTableData.size(), m_oTableData.size());
+
+    m_oTableData.append(sTableItem);
+
+    endInsertRows();
+}
+
+void TableModel::Clear()
+{
+    beginResetModel();
+    m_oTableData.clear();
     endResetModel();
 }
 
