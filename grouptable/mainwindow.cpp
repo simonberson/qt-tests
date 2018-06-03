@@ -103,7 +103,7 @@ QWidget *MainWindow::InitTableWidget()
 
     m_poTableGroupModel.reset(new TableGroupModel(this));
     m_poTableGroupModel->setSourceModel(m_poTableModel.data());
-    m_poTableGroupModel->setDynamicSortFilter(false); // update diractly on data change
+    m_poTableGroupModel->setDynamicSortFilter(false); // update directly on data change
 
     poGroupTable->setModel(m_poTableGroupModel.data());
 

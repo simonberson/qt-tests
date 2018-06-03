@@ -14,8 +14,7 @@ class TableGroupModel : public QSortFilterProxyModel
 private:
     mutable TableData m_oData;
 
-    QVariant GetData(int iRow) const;
-    QString GetName(int iRow) const;
+    QVariant GetData(int iRow, int iColumn) const;
 
     bool AddItem(const QString & oName, int iValue) const;
 

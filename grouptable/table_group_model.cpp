@@ -11,19 +11,22 @@ void TableGroupModel::Clear()
     m_oData.clear();
 }
 
-QVariant TableGroupModel::GetData(int iRow) const
+QVariant TableGroupModel::GetData(int iRow, int iColumn) const
 {
-    return m_oData.at(iRow).iValue;
-}
-
-QString TableGroupModel::GetName(int iRow) const
-{
-    return m_oData.at(iRow).oName;
+    switch (iColumn) {
+    case 0: // Name column
+        return m_oData.at(iRow).oName;
+    case 1: // Value column
+        return m_oData.at(iRow).iValue;
+    default:
+        break;
+    }
+    return QVariant();
 }
 
 bool TableGroupModel::AddItem(const QString &oName, int iValue) const
 {
-
+    // search for the item.
     auto oIt = std::find_if(m_oData.begin(), m_oData.end(),
                             [oName](const STABLE_ITEM & sTableItem){
         return (sTableItem.oName == oName);
@@ -39,7 +42,7 @@ bool TableGroupModel::AddItem(const QString &oName, int iValue) const
         return false;
     }
 
-    // New item
+    // Append new item
     m_oData.append(STABLE_ITEM(oName, iValue));
 
     // accept this row
@@ -72,14 +75,7 @@ QVariant TableGroupModel::data(const QModelIndex &index, int role) const
 
     switch (role) {
     case Qt::DisplayRole:
-
-        if (index.column() == 0)
-            return GetName(index.row());
-
-        if (index.column() == 1)
-            return GetData(index.row());
-
-        break;
+        return GetData(index.row(), index.column());
     default:
         break;
     }
