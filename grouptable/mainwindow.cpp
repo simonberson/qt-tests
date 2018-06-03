@@ -28,7 +28,7 @@ void MainWindow::FillTable()
     oTableData.append(STABLE_ITEM("b",3));
     oTableData.append(STABLE_ITEM("c",4));
     oTableData.append(STABLE_ITEM("c",5));
-    oTableData.append(STABLE_ITEM("a",6));
+    oTableData.append(STABLE_ITEM("a",7));
 
 
 
