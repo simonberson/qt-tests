@@ -17,6 +17,7 @@ private:
     QVariant GetData(int iRow, int iColumn) const;
     bool AddItem(const QString & oName, int iValue) const;
 
+
 protected:
     bool filterAcceptsRow(int iSourceRow, const QModelIndex &oSourceParent) const;
     QVariant data(const QModelIndex &oIndex, int role) const override;
@@ -25,6 +26,7 @@ public:
 
     TableGroupModel(QObject *parent = NULL) ;
 
+    void DoInvalidateFilter();
     void Clear();
 
 };

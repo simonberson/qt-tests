@@ -11,6 +11,7 @@ void TableGroupModel::Clear()
     m_oData.clear();
 }
 
+
 QVariant TableGroupModel::GetData(int iRow, int iColumn) const
 {
     switch (iColumn) {
@@ -32,11 +33,14 @@ bool TableGroupModel::AddItem(const QString &oName, int iValue) const
         return (sTableItem.oName == oName);
     });
 
+
     // Item found ?
     if (oIt != m_oData.end())
     {
+        int iRow = oIt - m_oData.begin();
+
         // update values.
-        (*oIt).iValue += iValue;
+        m_oData[iRow].iValue += iValue;
 
         // filter this row.
         return false;
@@ -47,6 +51,11 @@ bool TableGroupModel::AddItem(const QString &oName, int iValue) const
 
     // accept this row
     return true;
+}
+
+void TableGroupModel::DoInvalidateFilter()
+{
+    sort(0);
 }
 
 bool TableGroupModel::filterAcceptsRow(int iSourceRow, const QModelIndex &oSourceParent) const
@@ -65,7 +74,6 @@ bool TableGroupModel::filterAcceptsRow(int iSourceRow, const QModelIndex &oSourc
 
     // append data
     return AddItem(oValueName, iValue);
-
 }
 
 QVariant TableGroupModel::data(const QModelIndex &oIndex, int role) const

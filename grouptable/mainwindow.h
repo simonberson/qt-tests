@@ -13,7 +13,8 @@ class MainWindow : public QMainWindow
 private:
     QScopedPointer<TableModel> m_poTableModel;
     QScopedPointer<TableGroupModel> m_poTableGroupModel;
-    QScopedPointer<QSortFilterProxyModel> m_poSortModel;
+    QScopedPointer<QSortFilterProxyModel> m_poSortFilterModel;
+    QScopedPointer<QSortFilterProxyModel> m_poSortFilterGroupModel;
     void FillTable();
 
     QWidget * InitInputWidget();
