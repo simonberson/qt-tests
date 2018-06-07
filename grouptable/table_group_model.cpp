@@ -55,6 +55,7 @@ bool TableGroupModel::AddItem(const QString &oName, int iValue) const
 
 void TableGroupModel::DoInvalidateFilter()
 {
+    Clear();
     invalidateFilter();
 }
 

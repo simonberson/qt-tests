@@ -40,7 +40,6 @@ void MainWindow::FillTable()
     oTableData.append(STABLE_ITEM("c",5));
     oTableData.append(STABLE_ITEM("a",7));
 
-    m_poTableGroupModel->Clear();
     m_poTableModel->DropTable(oTableData);
     m_poTableGroupModel->DoInvalidateFilter();
 
@@ -98,7 +97,7 @@ QWidget *MainWindow::InitInputWidget()
         m_poSortFilterModel->setFilterKeyColumn(-1); // filter all columns
 
         // clear
-        m_poTableGroupModel->Clear();
+
         m_poTableGroupModel->DoInvalidateFilter();
 
     });
