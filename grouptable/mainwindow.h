@@ -6,6 +6,7 @@
 class TableModel;
 class TableGroupModel;
 class QSortFilterProxyModel;
+#include <QTimer>
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -14,12 +15,12 @@ private:
     QScopedPointer<TableModel> m_poTableModel;
     QScopedPointer<TableGroupModel> m_poTableGroupModel;
     QScopedPointer<QSortFilterProxyModel> m_poSortFilterModel;
-    QScopedPointer<QSortFilterProxyModel> m_poSortFilterGroupModel;
     void FillTable();
 
     QWidget * InitInputWidget();
     QWidget * InitTableWidget();
 
+    QTimer * m_poTimer;
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();

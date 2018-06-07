@@ -40,7 +40,9 @@ void MainWindow::FillTable()
     oTableData.append(STABLE_ITEM("c",5));
     oTableData.append(STABLE_ITEM("a",7));
 
+    m_poTableGroupModel->Clear();
     m_poTableModel->DropTable(oTableData);
+    m_poTableGroupModel->DoInvalidateFilter();
 
 }
 
@@ -66,9 +68,6 @@ QWidget *MainWindow::InitInputWidget()
     {
         m_poTableModel->AddItem(STABLE_ITEM(poItemName->text(),
                                             poItemValue->value()));
-
-        // refresh group model.
-        m_poTableGroupModel->DoInvalidateFilter();
     });
 
     connect(poClearBtn, &QPushButton::clicked,
@@ -98,11 +97,11 @@ QWidget *MainWindow::InitInputWidget()
         m_poSortFilterModel->setFilterFixedString(poFilterValue->text());
         m_poSortFilterModel->setFilterKeyColumn(-1); // filter all columns
 
-        // Filter group model
-        m_poSortFilterGroupModel->setFilterFixedString(poFilterValue->text());
-        m_poSortFilterGroupModel->setFilterKeyColumn(-1); // filter all columns
-    });
+        // clear
+        m_poTableGroupModel->Clear();
+        m_poTableGroupModel->DoInvalidateFilter();
 
+    });
 
     QWidget * poInWidget = new QWidget(this);
     QVBoxLayout * poVLayout = new QVBoxLayout;
@@ -113,7 +112,7 @@ QWidget *MainWindow::InitInputWidget()
 
     return poInWidget;
 }
-
+#include <iostream>
 QWidget *MainWindow::InitTableWidget()
 {
     QHBoxLayout * poHTableLayout = new QHBoxLayout;
@@ -128,19 +127,17 @@ QWidget *MainWindow::InitTableWidget()
 
     poTable->setModel(m_poSortFilterModel.data());
     poTable->setSortingEnabled(true);
-    m_poSortFilterModel->sort(0);
+
 
     // Group table view
     QTableView * poGroupTable = new QTableView(this);
 
     m_poTableGroupModel.reset(new TableGroupModel(this));
-    m_poTableGroupModel->setSourceModel(m_poTableModel.data());
+    m_poTableGroupModel->setSourceModel(m_poSortFilterModel.data());
     m_poTableGroupModel->setDynamicSortFilter(false); // update directly on data change
 
-    m_poSortFilterGroupModel.reset(new QSortFilterProxyModel(this));
-    m_poSortFilterGroupModel->setSourceModel(m_poTableGroupModel.data());
-
-    poGroupTable->setModel(m_poSortFilterGroupModel.data());
+    poGroupTable->setModel(m_poTableGroupModel.data());
+    poGroupTable->setSortingEnabled(true);
 
     // Layout horizontal tables
     poHTableLayout->addWidget(poTable);
@@ -148,6 +145,35 @@ QWidget *MainWindow::InitTableWidget()
 
     QWidget * poTablesWidget = new QWidget(this);
     poTablesWidget->setLayout(poHTableLayout);
+
+    m_poTimer = new QTimer(this);
+
+    connect(m_poTimer, &QTimer::timeout,
+            [this]()
+    {
+
+        QAbstractItemModel * poModel = m_poTableGroupModel.data();
+        int rows = poModel->rowCount();
+        for (int i = 0; i < rows; ++i) {
+            QModelIndex oCurIndex = poModel->index(i,0);
+            QString oName = poModel->data(oCurIndex).toString();
+
+            oCurIndex = poModel->index(i,1);
+            QString oValue = poModel->data(oCurIndex).toString();
+
+            std::cout<<"row = "<<i<<", name = "
+                    << oName.toStdString()
+                    <<", value = "<< oValue.toStdString()
+                    <<std::endl;
+        }
+
+        std::cout<<"total rows = "<<rows<<std::endl;
+
+
+
+    });
+
+    m_poTimer->start(5000);
 
     return poTablesWidget;
 }

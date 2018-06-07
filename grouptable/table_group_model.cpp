@@ -55,7 +55,7 @@ bool TableGroupModel::AddItem(const QString &oName, int iValue) const
 
 void TableGroupModel::DoInvalidateFilter()
 {
-    sort(0);
+    invalidateFilter();
 }
 
 bool TableGroupModel::filterAcceptsRow(int iSourceRow, const QModelIndex &oSourceParent) const
